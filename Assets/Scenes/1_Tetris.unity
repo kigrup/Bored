@@ -216,6 +216,7 @@ GameObject:
   m_Component:
   - component: {fileID: 811213905}
   - component: {fileID: 811213904}
+  - component: {fileID: 811213906}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: Untagged
@@ -236,6 +237,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BlockPrefab: {fileID: 1911310563395230, guid: c5d938ca15e2dd343a29a3268db3d121,
     type: 2}
+  HollowBlockPrefab: {fileID: 1911310563395230, guid: 7db25dfa14fcd75469a40e76400de841,
+    type: 2}
+  PiecePivotX: 0
+  PiecePivotY: 0
+  defaultFallSpeed: 0.5
+  fastFallSpeed: 0.05
+  instantFall: 1
 --- !u!4 &811213905
 Transform:
   m_ObjectHideFlags: 0
@@ -249,6 +257,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &811213906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 811213903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ac0fe7e661cd1c47870110b81d8d019, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameMaster: {fileID: 811213904}
 --- !u!1001 &811500167
 Prefab:
   m_ObjectHideFlags: 0

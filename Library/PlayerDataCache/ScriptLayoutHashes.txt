@@ -191,12 +191,13 @@ b13a5e08ca2e3afe846db1d60a588ec4 com.unity.render-pipelines.core.Runtime.dll:Uni
 44c2ca8fea6526907b3812c927f3fde3 com.unity.render-pipelines.core.Runtime.dll:UnityEngine.Experimental.Rendering.UI.DebugUIHandlerValue
 44c2ca8fea6526907b3812c927f3fde3 com.unity.render-pipelines.core.Runtime.dll:UnityEngine.Experimental.Rendering.UI.DebugUIHandlerUIntField
 973a9f2491cb1c0e1637293aa4802933 Assembly-CSharp.dll:.Curtain
-05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.TetrisMaster
+5563a9c5c3bf654d04dbd95545ee9072 Assembly-CSharp.dll:.TetrisMaster
 f3a7d6b7ba2834fa390d7aee0d4a2173 com.unity.postprocessing.Runtime.dll:UnityEngine.Rendering.PostProcessing.PostProcessVolume
 ea000d95aa91419abffd57da10ada274 com.unity.render-pipelines.core.Runtime.dll:UnityEngine.Experimental.Rendering.UI.DebugUIHandlerCanvas
 35e865cc5175d234df47214c8f8ec47c com.unity.postprocessing.Runtime.dll:UnityEngine.Rendering.PostProcessing.Grain
 f9e4c8f2e7dd6ec1b4feb1de85174b10 com.unity.render-pipelines.core.Runtime.dll:.SceneRenderPipeline
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ExtraMath
+12790527ed44f30711aedf05dd8650e2 Assembly-CSharp.dll:.PlayerInput
 62a2e00b0bc2c3e206b20b2a66df2735 com.unity.postprocessing.Runtime.dll:UnityEngine.Rendering.PostProcessing.AmbientOcclusion
 0b54b69e8cf2f4dcab76c6bf6ae4e0c8 com.unity.render-pipelines.core.Runtime.dll:UnityEngine.Experimental.Rendering.AdditionalShadowData
 ffa7fcd9fc705df60e62e22994540772 com.unity.render-pipelines.core.Runtime.dll:UnityEngine.Experimental.Rendering.UI.DebugUIHandlerVector4

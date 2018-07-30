@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\Menu\Curtain.cs" />
     <Compile Include="Assets\Scripts\Menu\GameButton.cs" />
     <Compile Include="Assets\Scripts\Menu\ScrollTransition.cs" />
+    <Compile Include="Assets\Scripts\Tetris\PlayerInput.cs" />
     <Compile Include="Assets\Scripts\Tetris\TetrisMaster.cs" />
     <Compile Include="Assets\Scripts\Util\ExtraMath.cs" />
     <Reference Include="com.unity.render-pipelines.core.Editor">
