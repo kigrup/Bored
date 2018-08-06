@@ -26,6 +26,10 @@ public class ScrollTransition : MonoBehaviour {
     {
         value = scroll.value;
 
+        if (Input.GetMouseButtonUp(0) && value < 0.02)
+        {
+            value = 0.02f;
+        }
         if (!Input.GetMouseButton(0))
         {
             // If value close to 0 or 1 clamp it there
@@ -38,12 +42,12 @@ public class ScrollTransition : MonoBehaviour {
                 value = 1;
             }
             // If value at 25% slowly close it to 0
-            else if (value < 0.25)
-            {
-                value *= 0.8f;
-            }
+            //else if (value < 0.25)
+            //{
+            //    value *= 0.8f;
+            //}
             // If value over 25% quickly move it away
-            else if (value >= 0.25)
+            else if (value > 0.01)
             {
                 value *= 1.1f;
             }

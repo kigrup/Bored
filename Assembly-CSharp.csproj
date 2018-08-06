@@ -63,9 +63,11 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Data\DataControl.cs" />
     <Compile Include="Assets\Scripts\Data\MenuLoadData.cs" />
+    <Compile Include="Assets\Scripts\Exp\ExperiencePopup.cs" />
     <Compile Include="Assets\Scripts\Menu\Curtain.cs" />
     <Compile Include="Assets\Scripts\Menu\GameButton.cs" />
     <Compile Include="Assets\Scripts\Menu\ScrollTransition.cs" />
+    <Compile Include="Assets\Scripts\Tetris\DataHandler.cs" />
     <Compile Include="Assets\Scripts\Tetris\PlayerInput.cs" />
     <Compile Include="Assets\Scripts\Tetris\TetrisMaster.cs" />
     <Compile Include="Assets\Scripts\Util\ExtraMath.cs" />

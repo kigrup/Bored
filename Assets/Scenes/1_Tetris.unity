@@ -113,6 +113,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &656096450 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114674739249147678, guid: c596dbe53af44fa4eb62e65b9c33df7a,
+    type: 2}
+  m_PrefabInternal: {fileID: 811500167}
+  m_Script: {fileID: 11500000, guid: 85b8c71e4b2146442ab6a6723c5a90cb, type: 3}
 --- !u!1 &805037464
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,6 +223,8 @@ GameObject:
   - component: {fileID: 811213905}
   - component: {fileID: 811213904}
   - component: {fileID: 811213906}
+  - component: {fileID: 811213907}
+  - component: {fileID: 811213908}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: Untagged
@@ -235,15 +243,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44e1af4ea0a9a9c43964b4377019a706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data_handler: {fileID: 0}
+  SceneHandler: {fileID: 0}
+  ExpPopup: {fileID: 1408145778702316, guid: f3ab8014d32cab244aedc90965473554, type: 2}
   BlockPrefab: {fileID: 1911310563395230, guid: c5d938ca15e2dd343a29a3268db3d121,
     type: 2}
   HollowBlockPrefab: {fileID: 1911310563395230, guid: 7db25dfa14fcd75469a40e76400de841,
     type: 2}
   PiecePivotX: 0
   PiecePivotY: 0
+  pivotMoved: 0
   defaultFallSpeed: 0.5
   fastFallSpeed: 0.05
   instantFall: 1
+  currentPieceID: 0
 --- !u!4 &811213905
 Transform:
   m_ObjectHideFlags: 0
@@ -269,6 +282,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameMaster: {fileID: 811213904}
+--- !u!114 &811213907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 811213903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9e548b8caa3674da7f2810793b7c1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 0}
+--- !u!114 &811213908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 811213903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a262555134f52fc4fa7222b60c82bdc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  game: 1
+  curtainScript: {fileID: 656096450}
 --- !u!1001 &811500167
 Prefab:
   m_ObjectHideFlags: 0
@@ -310,7 +348,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1797316951138504, guid: c596dbe53af44fa4eb62e65b9c33df7a, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c596dbe53af44fa4eb62e65b9c33df7a, type: 2}

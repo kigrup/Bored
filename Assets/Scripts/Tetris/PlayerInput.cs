@@ -8,12 +8,45 @@ public class PlayerInput : MonoBehaviour {
     public TetrisMaster GameMaster;
 
     static float moveDelay = 0.2f;
-    static float moveSpeed = 0.18f;
+    static float moveSpeed = 0.07f;
 
     static bool quickFalling = false;
 	
 	// Update is called once per frame
 	void Update () {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            PassMoveLeft();
+
+            CancelInvoke();
+            InvokeRepeating("PassMoveLeft", moveDelay, moveSpeed);
+        }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            PassMoveRight();
+
+            CancelInvoke();
+            InvokeRepeating("PassMoveRight", moveDelay, moveSpeed);
+        }
+        else if (Input.GetKeyDown(KeyCode.S)){
+            quickFalling = true;
+            GameMaster.StartQuickFall();
+        }
+        else if (Input.GetKeyDown(KeyCode.W))
+        {
+            GameMaster.Rotate();
+        }
+        else if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D) || Input.GetKeyDown(KeyCode.S))
+        {
+            CancelInvoke();
+            if (quickFalling)
+            {
+                quickFalling = false;
+                GameMaster.StopQuickFall();
+            }
+        }
+
+
 		if (Input.GetMouseButtonDown(0))
         {
             // Bottom left part of the screen moves the player left

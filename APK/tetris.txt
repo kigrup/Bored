@@ -1,0 +1,13 @@
+XP Rewards
+
+
+_ Line completion
+
++10  1 Line          	Line!
++25  2 Lines		 	Double!
++50  3 Lines		 	Triple!
++100 4 Lines			Perfect!
+
+_ Survival factor
+
+50 lines	

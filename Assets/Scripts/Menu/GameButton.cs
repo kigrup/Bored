@@ -5,13 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class GameButton : MonoBehaviour {
 
-	public enum Game { TETRIS = 1, SNAKE = 2, PACMAN = 3 }
+	public enum Game { MENU = 0, TETRIS = 1, SNAKE = 2, PACMAN = 3 }
 
     public Game game;
 
     public Curtain curtainScript;
-
-
+    
     private bool startedFadeIn = false;
 
     private void Update()
@@ -28,6 +27,15 @@ public class GameButton : MonoBehaviour {
 
     public void ChangeToGame()
     {
+        Debug.Log("Change to " + game);
+        curtainScript.FadeIn();
+
+        startedFadeIn = true;
+    }
+    public void ChangeToGame(Game game)
+    {
+        this.game = game;
+
         curtainScript.FadeIn();
 
         startedFadeIn = true;

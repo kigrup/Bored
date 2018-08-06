@@ -29,7 +29,6 @@ public class MenuLoadData : MonoBehaviour {
         level_text.text = "Level " + level;
 
         float level_percent = (data_exp % 1000f) / 1000f;
-        Debug.Log(level_percent);
         level_slider.value = level_percent;
     }
 }

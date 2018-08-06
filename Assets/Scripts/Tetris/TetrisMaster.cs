@@ -6,6 +6,15 @@ using UnityEngine.UI;
 
 public class TetrisMaster : MonoBehaviour {
 
+    public DataHandler data_handler;
+    public GameButton SceneHandler;
+
+    // Experience popup graphic
+    public GameObject ExpPopup;
+
+    // Instantiate UI inside this gameobject
+    public GameObject canvas;
+
     /* Square width and height = +0.958
      *                   scale = +1.023592
      * Coord [0,0] at        X = -4.344
@@ -37,6 +46,9 @@ public class TetrisMaster : MonoBehaviour {
     // Coordinate of the piece that is currently moving
     public int PiecePivotX, PiecePivotY;
 
+    // Flag: if piece already moved don't change it's pivot point more than once
+    public bool pivotMoved = false;
+
     // Rates at which player falls
     public float defaultFallSpeed = 0.5f;
     public float fastFallSpeed = 0.05f;
@@ -58,6 +70,14 @@ public class TetrisMaster : MonoBehaviour {
                                             { -1, 0 } };
 
     void Start () {
+        // Get script that will operate with player data
+        data_handler = GetComponent<DataHandler>();
+
+        // Get script that can reset scene
+        SceneHandler = GetComponent<GameButton>();
+
+        canvas = GameObject.Find("Canvas");
+
         // First piece spawn
         SpawnNextPiece();
 
@@ -65,18 +85,34 @@ public class TetrisMaster : MonoBehaviour {
         InvokeRepeating("Fall", 0.2f, 0.5f);
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        
-        Gizmos.DrawSphere(CoordToWorldPos(PiecePivotX, PiecePivotY), 0.2f);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    for (int y = 0; y < HEIGHT; y++)
+    //    {
+    //        for (int x = 0; x < WIDTH; x++)
+    //        {
+    //            if (StaticBlocks[x, y] != null)
+    //            {
+    //                Gizmos.color = Color.green;
+    //                Gizmos.DrawSphere(CoordToWorldPos(x, y), 0.2f);
+    //            }
+    //            else if (MovingBlocks[x, y] != null)
+    //            {
+    //                Gizmos.color = Color.blue;
+    //                Gizmos.DrawSphere(CoordToWorldPos(x, y), 0.2f);
+    //            }
+    //        }
+    //    }
+    //    Gizmos.color = Color.red;
+
+    //    Gizmos.DrawSphere(CoordToWorldPos(PiecePivotX, PiecePivotY), 0.2f);
+    //}
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            
+            SceneHandler.ChangeToGame(GameButton.Game.MENU);
         }
     }
 
@@ -184,7 +220,7 @@ public class TetrisMaster : MonoBehaviour {
     // Spawns the next piece choosing it randomly
     private void SpawnNextPiece()
     {
-        currentPieceID = Random.Range(0, 6);
+        currentPieceID = Random.Range(0, 7);
         SpawnPiece(currentPieceID, 5, 18);
 
         // Handle flag
@@ -228,12 +264,16 @@ public class TetrisMaster : MonoBehaviour {
 
         
         // If the moving block is the pivot
-        if (x_from == PiecePivotX && y_from == PiecePivotY)
+        if (!pivotMoved)
         {
-            PiecePivotX = x_to;
-            PiecePivotY = y_to;
+            if (x_from == PiecePivotX && y_from == PiecePivotY)
+            {
+                PiecePivotX = x_to;
+                PiecePivotY = y_to;
+                pivotMoved = true;
+            }
         }
-
+        
         // Change NextFrame blocks
         NextFrameMovingBlocks[x_to, y_to] = MovingBlocks[x_from, y_from];
     }
@@ -279,12 +319,17 @@ public class TetrisMaster : MonoBehaviour {
             }
         }
 
+        CheckFullLines();
+
         SpawnNextPiece();
     }
     
     // Move all MovingBlocks one block down and handle collision
     private void Fall()
     {
+        // Update flag
+        pivotMoved = false;
+
         // If any moving block has a StaticBlock underneath it, detect collision
         for (int x = 0; x < WIDTH; x++)
         {
@@ -316,11 +361,8 @@ public class TetrisMaster : MonoBehaviour {
             }
         }
 
-
         // Update blocks
         ApplyNextFrameBlocks();
-
-        CheckFullLines();
     }
     
     // Simulate and update where the piece will fall
@@ -336,7 +378,7 @@ public class TetrisMaster : MonoBehaviour {
             {
                 if (MovingBlocks[x, y] != null)
                 {
-                    Vector3 Position = CoordToWorldPos(x, y);
+                    Vector3 Position = CoordToWorldPos(x, y, 8.75f);
 
                     HollowBlocks[x, y] = Instantiate(HollowBlockPrefab, Position, Quaternion.identity);
                 }
@@ -390,7 +432,7 @@ public class TetrisMaster : MonoBehaviour {
                     {
                         nextFrame[x, y - 1] = HollowBlocks[x, y];
 
-                        nextFrame[x, y - 1].transform.position = CoordToWorldPos(x, y - 1);
+                        nextFrame[x, y - 1].transform.position = CoordToWorldPos(x, y - 1, 8.75f);
                     }
                 }
             }
@@ -414,10 +456,6 @@ public class TetrisMaster : MonoBehaviour {
             }
         }
     }
-    
-    //////////////
-    // ROTATION //
-    //////////////
 
     public void Rotate(bool clockwise = true)
     {
@@ -453,6 +491,11 @@ public class TetrisMaster : MonoBehaviour {
                     {
                         return;
                     }
+                    // If new absolute position is over static block, cancel rotation
+                    else if (StaticBlocks[(int)absX, (int)absY] != null)
+                    {
+                        return;
+                    }
                 }
             }
         }
@@ -484,16 +527,21 @@ public class TetrisMaster : MonoBehaviour {
     private void Die()
     {
         killPlayer = false;
+        SceneHandler.ChangeToGame(GameButton.Game.TETRIS);
 
-        CleanArray(MovingBlocks);
-        CleanArray(StaticBlocks);
-        CleanArray(NextFrameMovingBlocks);
-        CleanArray(HollowBlocks);
+        //CleanArray(MovingBlocks);
+        //CleanArray(StaticBlocks);
+        //CleanArray(NextFrameMovingBlocks);
+        //CleanArray(HollowBlocks);
+
     }
 
     // From player input
     public void MoveLeft()
     {
+        // Update flag
+        pivotMoved = false;
+
         // If any moving block has a StaticBlock to its left, cancel movement
         for (int x = 0; x < WIDTH; x++)
         {
@@ -531,6 +579,9 @@ public class TetrisMaster : MonoBehaviour {
     }
     public void MoveRight()
     {
+        // Update flag
+        pivotMoved = false;
+
         // If any moving block has a StaticBlock to its right, cancel movement
         for (int x = 0; x < WIDTH; x++)
         {
@@ -589,7 +640,56 @@ public class TetrisMaster : MonoBehaviour {
         }
     }
 
-    // Delete completed lines and award XP
+    // Awards exp
+    public void Experience(int lines)
+    {
+        // Instance popup
+        int xPopup = PiecePivotX;
+
+        if (xPopup < 1)
+            xPopup = 1;
+        else if (xPopup > 8)
+            xPopup = 8;
+
+        int yPopup = PiecePivotY;
+        if (yPopup < 2)
+            yPopup = 2;
+        else if (yPopup > 12)
+            yPopup = 12;
+
+        Vector3 Position = CoordToWorldPos(xPopup, yPopup, 9f);
+        GameObject popup = Instantiate(ExpPopup, Position, Quaternion.identity, canvas.transform);
+
+        string newText = "";
+
+        switch (lines)
+        {
+            case 1:
+                newText = "Line!" + "\n" + "+10 Exp";
+                data_handler.AddExp(10);
+                break;
+            case 2:
+                newText = "Double!" + "\n" + "+25 Exp";
+                data_handler.AddExp(25);
+                break;
+            case 3:
+                newText = "Triple!" + "\n" + "+50 Exp";
+                data_handler.AddExp(50);
+                break;
+            case 4:
+                newText = "Perfect!" + "\n" + "+100 Exp";
+                data_handler.AddExp(100);
+                break;
+
+            default:
+                Debug.Log("Invalid lines parameter at Experience()");
+                break;
+        }
+
+        popup.GetComponent<Text>().text = newText;
+    }
+
+    // Checks lines and passes on exp pop-up instancing
     public void CheckFullLines()
     {
         int deletedLines = 0;
@@ -602,8 +702,7 @@ public class TetrisMaster : MonoBehaviour {
                 {
                     x = 100;
                 }
-                
-                if (x == 9)
+                else if (x == 9)
                 {
                     deletedLines++;
                     DeleteLine(y);
@@ -612,9 +711,14 @@ public class TetrisMaster : MonoBehaviour {
             }
         }
 
-
+        // Handle deleted lines
+        if (deletedLines > 0)
+        {
+            Experience(deletedLines);
+        }
     }
 
+    // Removes blocks
     public void DeleteLine(int deletedY)
     {
         for (int y = deletedY; y < HEIGHT; y++)
@@ -629,14 +733,20 @@ public class TetrisMaster : MonoBehaviour {
                 }
                 else
                 {
-                    // Move line below
-                    StaticBlocks[x, y - 1] = StaticBlocks[x, y];
-                    StaticBlocks[x, y] = null;
+                    if (StaticBlocks[x, y] != null)
+                    {
+                        // Move line below
+                        StaticBlocks[x, y].transform.position = CoordToWorldPos(x, y - 1);
 
-                    StaticBlocks[x, y - 1].transform.position = CoordToWorldPos(x, y - 1);
+                        StaticBlocks[x, y - 1] = StaticBlocks[x, y];
+                        StaticBlocks[x, y] = null;
+                    }
                 }
             }
         }
+
+        // Resimulate falling
+        FallSimulation();
     }
 
     ///////////////
@@ -649,6 +759,15 @@ public class TetrisMaster : MonoBehaviour {
         float XPos = -4.344f + (0.958f * x);
         float YPos = -8.526f + (0.958f * y);
         float ZPos = +8.720f;
+        Vector3 Position = new Vector3(XPos, YPos, ZPos);
+
+        return Position;
+    }
+    public Vector3 CoordToWorldPos(int x, int y, float z)
+    {
+        float XPos = -4.344f + (0.958f * x);
+        float YPos = -8.526f + (0.958f * y);
+        float ZPos = z;
         Vector3 Position = new Vector3(XPos, YPos, ZPos);
 
         return Position;
