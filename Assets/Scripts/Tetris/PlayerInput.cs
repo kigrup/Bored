@@ -49,8 +49,13 @@ public class PlayerInput : MonoBehaviour {
 
 		if (Input.GetMouseButtonDown(0))
         {
+            if (clickedPiece())
+            {
+                GameMaster.ToggleFallType();
+            }
+
             // Bottom left part of the screen moves the player left
-            if (Input.mousePosition.x < (Screen.width / 3) && Input.mousePosition.y < Screen.height / 2)
+            else if (Input.mousePosition.x < (Screen.width / 3) && Input.mousePosition.y < Screen.height / 2)
             {
                 PassMoveLeft();
 
@@ -102,5 +107,24 @@ public class PlayerInput : MonoBehaviour {
     private void PassMoveRight()
     {
         GameMaster.MoveRight();
+    }
+
+    private bool clickedPiece()
+    {
+        Vector3 piecePos = GameMaster.CoordToWorldPos();
+        Vector3 inputPos = Input.mousePosition;
+
+        Debug.Log(inputPos);
+
+        float clickRadius = TetrisMaster.squareWidth * 2;
+
+        if (Vector3.Distance(piecePos, inputPos) < clickRadius)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

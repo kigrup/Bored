@@ -68,6 +68,8 @@
     <Compile Include="Assets\Scripts\Menu\GameButton.cs" />
     <Compile Include="Assets\Scripts\Menu\ScrollTransition.cs" />
     <Compile Include="Assets\Scripts\Tetris\DataHandler.cs" />
+    <Compile Include="Assets\Scripts\Tetris\Menu\FadeAwayOnClick.cs" />
+    <Compile Include="Assets\Scripts\Tetris\Menu\TetrisMenu.cs" />
     <Compile Include="Assets\Scripts\Tetris\PlayerInput.cs" />
     <Compile Include="Assets\Scripts\Tetris\TetrisMaster.cs" />
     <Compile Include="Assets\Scripts\Util\ExtraMath.cs" />

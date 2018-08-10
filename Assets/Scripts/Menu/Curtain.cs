@@ -8,6 +8,9 @@ public class Curtain : MonoBehaviour {
     SpriteRenderer renderer;
     Color color;
 
+    public bool FadeOutOnStart;
+    public bool FadeInOnStart;
+
     private bool fadingIn = false;
     public bool FadingIn {
         get {
@@ -28,7 +31,10 @@ public class Curtain : MonoBehaviour {
         color = renderer.color;
 
         // Remove curtain at app start
-        FadeOut();
+        if (FadeOutOnStart)
+            FadeOut();
+        else if (FadeInOnStart)
+            FadeIn();
     }
 
     private void Update()

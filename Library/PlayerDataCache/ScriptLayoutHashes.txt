@@ -1,6 +1,6 @@
 Android
 PlayerPath?
-F:/Software/Unity Editors/2018.1.4f1/Project/Bored/APK/Bored-0.3.apk
+F:/Software/Unity Editors/2018.1.4f1/Project/Bored/APK/Bored-0.4.apk
 SceneListBegin?
 Assets/Scenes/0_Menu.unity
 Assets/Scenes/1_Tetris.unity
@@ -96,6 +96,7 @@ f61c0793411f10cf5fbfa1473fef5ef2 UnityEngine.UI.dll:UnityEngine.UI.ToggleGroup
 1b8c02d0aa82fbf036a2b9b2d713eec3 UnityEngine.UI.dll:UnityEngine.UI.VerticalLayoutGroup
 6c627aa0af011192e2d8522361a3a3d9 com.unity.postprocessing.Runtime.dll:UnityEngine.Rendering.PostProcessing.ScreenSpaceReflections
 dc267bfbc7cacfcb4ee38a4c60fe73ea com.unity.postprocessing.Runtime.dll:UnityEngine.Rendering.PostProcessing.PostProcessProfile
+25687925e248d440d147b5e3b25afd6b Assembly-CSharp.dll:.TetrisMenu
 ad1e0b72ef7d474035c1290783b5f25d com.unity.postprocessing.Runtime.dll:UnityEngine.Rendering.PostProcessing.Vignette
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
 cf455f7a806648c6ed4c7d3e3f8a0e03 UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationTrack
@@ -130,6 +131,7 @@ e9bdabf9265d758d56f01bb188916fa8 UnityEngine.Networking.dll:UnityEngine.Networki
 f69851d1bdc15ad072ae6f5444c2028c com.unity.render-pipelines.core.Runtime.dll:UnityEngine.Experimental.Rendering.GPUCopyAsset
 322cb40e1e282f28af980cbef7922a90 UnityEngine.Analytics.dll:UnityEngine.Analytics.AnalyticsEventTracker
 dc07d7ad69b399a46e92c483bf1c04ca UnityEngine.Analytics.dll:UnityEngine.Analytics.AnalyticsTracker
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ExperiencePopup
 62b73255601105dd2f3414b408719074 com.unity.postprocessing.Runtime.dll:UnityEngine.Rendering.PostProcessing.PostProcessEffectSettings
 bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.AudioSpatializerMicrosoft
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.HoloLens.dll:UnityEngine.EventSystems.HoloLensInput
@@ -189,10 +191,11 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.Spa
 14d8f5c75d5bd046e8b9cc9994e22a96 Assembly-CSharp.dll:.MenuLoadData
 b13a5e08ca2e3afe846db1d60a588ec4 com.unity.render-pipelines.core.Runtime.dll:UnityEngine.Experimental.Rendering.UI.DebugUIHandlerVector2
 9de3a22eca9aefadba2d10d5987cefe3 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
+9f58560b1a61a0cbee4f70afa4e35fd2 Assembly-CSharp.dll:.FadeAwayOnClick
 44c2ca8fea6526907b3812c927f3fde3 com.unity.render-pipelines.core.Runtime.dll:UnityEngine.Experimental.Rendering.UI.DebugUIHandlerValue
 44c2ca8fea6526907b3812c927f3fde3 com.unity.render-pipelines.core.Runtime.dll:UnityEngine.Experimental.Rendering.UI.DebugUIHandlerUIntField
-973a9f2491cb1c0e1637293aa4802933 Assembly-CSharp.dll:.Curtain
-abb2f10e6c249fcfdc772f52449bd97a Assembly-CSharp.dll:.TetrisMaster
+affce7e687637867136f07eacc6b12aa Assembly-CSharp.dll:.Curtain
+3762aed3f11b181756c5c5c7862b5cb8 Assembly-CSharp.dll:.TetrisMaster
 f3a7d6b7ba2834fa390d7aee0d4a2173 com.unity.postprocessing.Runtime.dll:UnityEngine.Rendering.PostProcessing.PostProcessVolume
 ea000d95aa91419abffd57da10ada274 com.unity.render-pipelines.core.Runtime.dll:UnityEngine.Experimental.Rendering.UI.DebugUIHandlerCanvas
 35e865cc5175d234df47214c8f8ec47c com.unity.postprocessing.Runtime.dll:UnityEngine.Rendering.PostProcessing.Grain
@@ -205,7 +208,6 @@ ffa7fcd9fc705df60e62e22994540772 com.unity.render-pipelines.core.Runtime.dll:Uni
 44c2ca8fea6526907b3812c927f3fde3 com.unity.render-pipelines.core.Runtime.dll:UnityEngine.Experimental.Rendering.UI.DebugUIHandlerIntField
 359c04ff85d238bf6df69294febb8bfc com.unity.render-pipelines.core.Runtime.dll:UnityEngine.Experimental.Rendering.FreeCamera
 a38c965d56b79e71ceb0bb922e53ab99 com.unity.render-pipelines.core.Runtime.dll:UnityEngine.Experimental.Rendering.UI.DebugUIHandlerHBox
-da84881098a950433568a54758bbfb6b Assembly-CSharp.dll:.DataControl
+62a225ed2251be415a7af7bb71cfd6be Assembly-CSharp.dll:.DataControl
 04d65fe77e066506e98e473b918f4017 com.unity.render-pipelines.core.Runtime.dll:UnityEngine.Experimental.Rendering.UI.DebugUIHandlerContainer
 44c2ca8fea6526907b3812c927f3fde3 com.unity.render-pipelines.core.Runtime.dll:UnityEngine.Experimental.Rendering.UI.DebugUIHandlerIndirectFloatField
-05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ExperiencePopup

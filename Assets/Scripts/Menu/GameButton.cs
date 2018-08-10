@@ -15,6 +15,7 @@ public class GameButton : MonoBehaviour {
 
     private void Update()
     {
+        // Check if finished fading in
         if (startedFadeIn)
         {
             if (curtainScript.FadingIn == false)
@@ -25,13 +26,6 @@ public class GameButton : MonoBehaviour {
         }
     }
 
-    public void ChangeToGame()
-    {
-        Debug.Log("Change to " + game);
-        curtainScript.FadeIn();
-
-        startedFadeIn = true;
-    }
     public void ChangeToGame(Game game)
     {
         this.game = game;
@@ -40,5 +34,11 @@ public class GameButton : MonoBehaviour {
 
         startedFadeIn = true;
     }
-
+    public void ChangeToGame()
+    {
+        curtainScript.FadeIn();
+        
+        // Start fade in
+        startedFadeIn = true;
+    }
 }

@@ -15,6 +15,8 @@ public class TetrisMaster : MonoBehaviour {
     // Instantiate UI inside this gameobject
     public GameObject canvas;
 
+    public static float squareWidth = 0.958f;
+
     /* Square width and height = +0.958
      *                   scale = +1.023592
      * Coord [0,0] at        X = -4.344
@@ -47,7 +49,7 @@ public class TetrisMaster : MonoBehaviour {
     public int PiecePivotX, PiecePivotY;
 
     // Flag: if piece already moved don't change it's pivot point more than once
-    public bool pivotMoved = false;
+    private bool pivotMoved = false;
 
     // Rates at which player falls
     public float defaultFallSpeed = 0.5f;
@@ -56,11 +58,17 @@ public class TetrisMaster : MonoBehaviour {
     // Quick fall type: fast fall = false, teleport = true
     public bool instantFall = false;
 
-    // Player died flag
+    // Flag: player died and needs to be killed
     private bool killPlayer = false;
+
+    // Flag: 
+    private bool killedPlayer = false;
 
     // Next piece ID
     public int currentPieceID = 0;
+
+    // Flag: changes where player is redirected when quitting things
+    public bool inTetrisMainMenu = true;
 
     // Rotation Matrix
     public int[,] RotationMatrix = { { 0, -1 },
@@ -69,6 +77,9 @@ public class TetrisMaster : MonoBehaviour {
     public int[,] RotationMatrixInversed = { { 0, 1 },
                                             { -1, 0 } };
 
+    // Exp gained in the current match
+    private int score;
+
     void Start () {
         // Get script that will operate with player data
         data_handler = GetComponent<DataHandler>();
@@ -76,13 +87,8 @@ public class TetrisMaster : MonoBehaviour {
         // Get script that can reset scene
         SceneHandler = GetComponent<GameButton>();
 
+        // Get scene canvas
         canvas = GameObject.Find("Canvas");
-
-        // First piece spawn
-        SpawnNextPiece();
-
-        // Start falling at default speed
-        InvokeRepeating("Fall", 0.2f, 0.5f);
     }
 
     //private void OnDrawGizmos()
@@ -112,8 +118,32 @@ public class TetrisMaster : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneHandler.ChangeToGame(GameButton.Game.MENU);
+            EndGame();
         }
+    }
+
+    public void EndGame()
+    {
+        data_handler.SetTetrisScore(score);
+        score = 0;
+
+        if (inTetrisMainMenu)
+            SceneHandler.ChangeToGame(GameButton.Game.MENU);
+
+        else
+            SceneHandler.ChangeToGame(GameButton.Game.TETRIS);
+    }
+
+    public void StartGame()
+    {
+        // Set flag
+        inTetrisMainMenu = false;
+
+        // First piece spawn
+        SpawnNextPiece();
+
+        // Start falling at default speed
+        InvokeRepeating("Fall", 0.2f, 0.5f);
     }
 
     //////////////
@@ -143,8 +173,11 @@ public class TetrisMaster : MonoBehaviour {
         // Player dies if there's a static block at the spawning location
         else if (StaticBlocks[x, y] != null)
         {
-            killPlayer = true;
-            return;
+            if (!killedPlayer)
+            {
+                killPlayer = true;
+                return;
+            }
         }
 
         // Instance at the specified coord as a moving block and store it
@@ -226,8 +259,11 @@ public class TetrisMaster : MonoBehaviour {
         // Handle flag
         if (killPlayer)
         {
-            Die();
-            return;
+            if (!killedPlayer)
+            {
+                Die();
+                return;
+            }
         }
 
         FallSimulation();
@@ -527,6 +563,11 @@ public class TetrisMaster : MonoBehaviour {
     private void Die()
     {
         killPlayer = false;
+
+        killedPlayer = true;
+
+        EndGame();
+
         SceneHandler.ChangeToGame(GameButton.Game.TETRIS);
 
         //CleanArray(MovingBlocks);
@@ -639,6 +680,10 @@ public class TetrisMaster : MonoBehaviour {
             InvokeRepeating("Fall", 0f, defaultFallSpeed);
         }
     }
+    public void ToggleFallType()
+    {
+        instantFall = !instantFall;
+    }
 
     // Awards exp
     public void Experience(int lines)
@@ -667,18 +712,22 @@ public class TetrisMaster : MonoBehaviour {
             case 1:
                 newText = "Line!" + "\n" + "+10 Exp";
                 data_handler.AddExp(10);
+                score += 10;
                 break;
             case 2:
                 newText = "Double!" + "\n" + "+25 Exp";
                 data_handler.AddExp(25);
+                score += 25;
                 break;
             case 3:
                 newText = "Triple!" + "\n" + "+50 Exp";
                 data_handler.AddExp(50);
+                score += 50;
                 break;
             case 4:
                 newText = "Perfect!" + "\n" + "+100 Exp";
                 data_handler.AddExp(100);
+                score += 100;
                 break;
 
             default:
@@ -754,6 +803,15 @@ public class TetrisMaster : MonoBehaviour {
     ///////////////
 
     // Converts tetris map coords into Unity Vector3
+    public Vector3 CoordToWorldPos()
+    {
+        float XPos = -4.344f + (0.958f * PiecePivotX);
+        float YPos = -8.526f + (0.958f * PiecePivotY);
+        float ZPos = +8.720f;
+        Vector3 Position = new Vector3(XPos, YPos, ZPos);
+
+        return Position;
+    }
     public Vector3 CoordToWorldPos(int x, int y)
     {
         float XPos = -4.344f + (0.958f * x);

@@ -19,4 +19,29 @@ public class DataHandler : MonoBehaviour {
 
         Debug.Log("+" + exp + " EXP");
     }
+
+    public void SetTetrisScore(int newScore)
+    {
+        data.Load();
+        data.tetris_last_score = newScore;
+
+        if (data.tetris_best_score < newScore)
+            data.tetris_best_score = newScore;
+
+        data.Save();
+    }
+
+    public int GetTetrisLastScore()
+    {
+        data.Load();
+        int last_score = data.tetris_last_score;
+        return last_score;
+    }
+
+    public int GetTetrisBestScore()
+    {
+        data.Load();
+        int best_score = data.tetris_best_score;
+        return best_score;
+    }
 }
